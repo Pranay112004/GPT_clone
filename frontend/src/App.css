@@ -1,0 +1,223 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background: #0d0d0d;
+  color: #f5f5f5;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Layout */
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  background: #1c1c1c;
+  border-right: 1px solid #2e2e2e;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 1.5rem;
+}
+
+/* Logo & Brand */
+.upperSideTop {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.brand {
+  font-size: 2rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #40c9ff, #e81cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* New Chat Button */
+.midBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #71d0c0, #afbdcd);
+  border: none;
+  color: white;
+  padding: 1.2rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0, 255, 224, 0.2);
+  transition: all 0.3s ease;
+}
+
+.midBtn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.addBtn {
+  width: 20px;
+  height: 20px;
+}
+
+/* Suggested Queries */
+.upperSideBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.query {
+  background-color: #2e2e2e;
+  color: #ccc;
+  border: 1px solid #3b3b3b;
+  padding: 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.query img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
+}
+
+.query:hover {
+  background-color: #3b3b3b;
+  transform: scale(1.02);
+}
+
+/* Main Chat Area */
+.main {
+  flex: 1;
+  padding: 2.5rem;
+  background: radial-gradient(circle at top left, #1a1a1a, #0f0f0f);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Welcome Message */
+.welcome {
+  text-align: center;
+  margin-top: 10%;
+}
+
+.welcome h2 {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.welcome p {
+  font-size: 1.6rem;
+  color: #bbbbbb;
+}
+
+/* Chats */
+.chats {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 1rem;
+  margin-bottom: 2rem;
+}
+
+.chat {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chat img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.chat.bot img {
+  background-color: #444;
+}
+
+.txt {
+  background: #2c2c2c;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  color: #f1f1f1;
+  max-width: 80%;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.bot .txt {
+  background: #383838;
+}
+
+/* Input Footer */
+.chatFooter {
+  padding-top: 1rem;
+  border-top: 1px solid #2e2e2e;
+}
+
+.inp {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #1e1e1e;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.inp input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #f5f5f5;
+  font-size: 1.5rem;
+  outline: none;
+}
+
+.send {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.send img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+  transition: transform 0.2s ease;
+}
+
+.send:hover img {
+  transform: scale(1.1);
+}
