@@ -4,17 +4,15 @@ import dotenv from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import path from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 // Get current directory
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 // Middleware
 app.use(cors());
@@ -30,7 +28,7 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 // API route for Gemini
-app.post("/api/gemini", async (req, res) => {
+app.post("/", async (req, res) => {
   try {
     const { prompt } = req.body;
     if (!prompt) {

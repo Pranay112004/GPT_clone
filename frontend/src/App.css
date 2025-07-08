@@ -6,13 +6,14 @@
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 62.5%; /* 1rem = 10px, adjustable by device */
 }
 
 body {
   background: #0d0d0d;
   color: #f5f5f5;
   font-family: "Poppins", sans-serif;
+  font-size: clamp(1.4rem, 2.5vw, 1.6rem); /* Responsive base font */
 }
 
 /* Layout */
@@ -20,17 +21,20 @@ body {
   display: flex;
   height: 100vh;
   overflow: hidden;
+  position: relative; /* For sidebar toggle */
 }
 
 /* Sidebar */
 .sidebar {
-  width: 280px;
+  width: clamp(220px, 25vw, 280px); /* Responsive width */
   background: #1c1c1c;
   border-right: 1px solid #2e2e2e;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2rem 1.5rem;
+  padding: clamp(1.5rem, 2vw, 2rem) clamp(1rem, 2vw, 1.5rem);
+  transition: transform 0.3s ease;
+  z-index: 10; /* Above main content */
 }
 
 /* Logo & Brand */
@@ -38,16 +42,16 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1.5rem, 2vw, 2rem);
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
+  width: clamp(30px, 4vw, 40px);
+  height: clamp(30px, 4vw, 40px);
 }
 
 .brand {
-  font-size: 2rem;
+  font-size: clamp(1.6rem, 2.5vw, 2rem);
   font-weight: 600;
   background: linear-gradient(45deg, #40c9ff, #e81cff);
   -webkit-background-clip: text;
@@ -63,11 +67,12 @@ body {
   background: linear-gradient(135deg, #71d0c0, #afbdcd);
   border: none;
   color: white;
-  padding: 1.2rem;
+  padding: clamp(1rem, 1.5vw, 1.2rem);
   border-radius: 10px;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1.5rem, 2vw, 2rem);
   cursor: pointer;
   font-weight: 600;
+  font-size: clamp(1.4rem, 2vw, 1.6rem);
   box-shadow: 0 4px 20px rgba(0, 255, 224, 0.2);
   transition: all 0.3s ease;
 }
@@ -78,33 +83,34 @@ body {
 }
 
 .addBtn {
-  width: 20px;
-  height: 20px;
+  width: clamp(16px, 2.5vw, 20px);
+  height: clamp(16px, 2.5vw, 20px);
 }
 
 /* Suggested Queries */
 .upperSideBottom {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: clamp(1rem, 1.5vw, 1.2rem);
 }
 
 .query {
   background-color: #2e2e2e;
   color: #ccc;
   border: 1px solid #3b3b3b;
-  padding: 1.2rem;
+  padding: clamp(1rem, 1.5vw, 1.2rem);
   border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 1rem;
+  font-size: clamp(1.3rem, 2vw, 1.5rem);
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .query img {
-  width: 18px;
-  height: 18px;
+  width: clamp(14px, 2vw, 18px);
+  height: clamp(14px, 2vw, 18px);
   filter: brightness(0) invert(1);
 }
 
@@ -116,7 +122,7 @@ body {
 /* Main Chat Area */
 .main {
   flex: 1;
-  padding: 2.5rem;
+  padding: clamp(1.5rem, 2.5vw, 2.5rem);
   background: radial-gradient(circle at top left, #1a1a1a, #0f0f0f);
   overflow-y: auto;
   display: flex;
@@ -127,17 +133,17 @@ body {
 /* Welcome Message */
 .welcome {
   text-align: center;
-  margin-top: 10%;
+  margin-top: 15vh; /* Adjusted for smaller screens */
 }
 
 .welcome h2 {
-  font-size: 2.4rem;
-  margin-bottom: 1rem;
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  margin-bottom: clamp(0.8rem, 1.5vw, 1rem);
   color: #ffffff;
 }
 
 .welcome p {
-  font-size: 1.6rem;
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
   color: #bbbbbb;
 }
 
@@ -145,20 +151,20 @@ body {
 .chats {
   flex: 1;
   overflow-y: auto;
-  padding-right: 1rem;
-  margin-bottom: 2rem;
+  padding-right: clamp(0.5rem, 1vw, 1rem);
+  margin-bottom: clamp(1.5rem, 2vw, 2rem);
 }
 
 .chat {
   display: flex;
   align-items: flex-start;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: clamp(1rem, 1.5vw, 1.5rem);
+  margin-bottom: clamp(1.5rem, 2vw, 2rem);
 }
 
 .chat img {
-  width: 36px;
-  height: 36px;
+  width: clamp(24px, 4vw, 36px);
+  height: clamp(24px, 4vw, 36px);
   border-radius: 50%;
 }
 
@@ -168,11 +174,11 @@ body {
 
 .txt {
   background: #2c2c2c;
-  padding: 1rem 1.5rem;
+  padding: clamp(0.8rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.5rem);
   border-radius: 10px;
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
   color: #f1f1f1;
-  max-width: 80%;
+  max-width: 85%; /* Slightly wider on mobile */
   line-height: 1.5;
   word-wrap: break-word;
 }
@@ -183,17 +189,17 @@ body {
 
 /* Input Footer */
 .chatFooter {
-  padding-top: 1rem;
+  padding-top: clamp(0.8rem, 1.5vw, 1rem);
   border-top: 1px solid #2e2e2e;
 }
 
 .inp {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: clamp(0.8rem, 1.5vw, 1rem);
   background: #1e1e1e;
   border-radius: 10px;
-  padding: 1rem;
+  padding: clamp(0.8rem, 1.5vw, 1rem);
 }
 
 .inp input {
@@ -201,7 +207,7 @@ body {
   background: transparent;
   border: none;
   color: #f5f5f5;
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
   outline: none;
 }
 
@@ -209,15 +215,130 @@ body {
   background: transparent;
   border: none;
   cursor: pointer;
+  padding: 0.5rem; /* Larger touch target */
 }
 
 .send img {
-  width: 24px;
-  height: 24px;
+  width: clamp(18px, 3vw, 24px);
+  height: clamp(18px, 3vw, 24px);
   filter: brightness(0) invert(1);
   transition: transform 0.2s ease;
 }
 
 .send:hover img {
   transform: scale(1.1);
+}
+
+/* Sidebar Toggle Button (Mobile) */
+.toggle-sidebar {
+  display: none; /* Hidden on desktop */
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  background: #2e2e2e;
+  border: none;
+  border-radius: 50%;
+  padding: 0.8rem;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.toggle-sidebar img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  /* Stack layout vertically */
+  .app {
+    flex-direction: column;
+  }
+
+  /* Sidebar slides off-screen */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: clamp(200px, 70vw, 250px);
+    transform: translateX(-100%); /* Hidden by default */
+  }
+
+  .sidebar.active {
+    transform: translateX(0); /* Visible when toggled */
+  }
+
+  /* Show toggle button */
+  .toggle-sidebar {
+    display: block;
+  }
+
+  /* Main content full width */
+  .main {
+    padding: clamp(1rem, 2vw, 1.5rem);
+    width: 100%;
+  }
+
+  /* Welcome message */
+  .welcome {
+    margin-top: 10vh;
+  }
+
+  /* Chat area */
+  .txt {
+    max-width: 90%;
+  }
+
+  /* Input footer */
+  .inp {
+    padding: clamp(0.6rem, 1.5vw, 0.8rem);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Further adjustments for small mobiles */
+  html {
+    font-size: 55%; /* Slightly smaller base font */
+  }
+
+  .sidebar {
+    width: 80vw; /* Wider sidebar for touch */
+  }
+
+  .main {
+    padding: 1rem;
+  }
+
+  .welcome h2 {
+    font-size: clamp(1.6rem, 4vw, 2rem);
+  }
+
+  .welcome p {
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+  }
+
+  .chat img {
+    width: clamp(20px, 5vw, 28px);
+    height: clamp(20px, 5vw, 28px);
+  }
+
+  .txt {
+    padding: 0.8rem 1rem;
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+  }
+
+  .inp input {
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+  }
+
+  .send {
+    padding: 0.6rem;
+  }
+
+  .send img {
+    width: clamp(16px, 4vw, 20px);
+    height: clamp(16px, 4vw, 20px);
+  }
 }
