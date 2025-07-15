@@ -34,7 +34,7 @@ app.get("/api/test", (req, res) => {
   res.json({ message: "API is working!", timestamp: new Date().toISOString() });
 });
 
-// API endpoint with debugging
+// API endpoint with debugging and retry logic
 app.post("/api/generate", async (req, res) => {
   console.log("🔥 API endpoint hit:", req.body);
   try {
@@ -44,13 +44,48 @@ app.post("/api/generate", async (req, res) => {
       return res.status(400).json({ error: "Prompt is required" });
     }
     console.log("📝 Generating response for prompt:", prompt.substring(0, 100));
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
-    console.log("✅ Response generated successfully");
-    res.json({ response: text });
+    
+    // Retry logic for Gemini API
+    let lastError;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        console.log(`🔄 Attempt ${attempt}/3`);
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
+        console.log("✅ Response generated successfully");
+        return res.json({ response: text });
+      } catch (err) {
+        lastError = err;
+        console.log(`❌ Attempt ${attempt} failed:`, err.message);
+        
+        if (err.message.includes('overloaded') || err.message.includes('503')) {
+          console.log(`⏳ Waiting 2 seconds before retry...`);
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          continue;
+        }
+        
+        // For non-retryable errors, break immediately
+        break;
+      }
+    }
+    
+    // All retries failed
+    console.error("❌ All retry attempts failed:", lastError.message);
+    
+    // Provide user-friendly error messages
+    let errorMessage = "Sorry, I couldn't generate a response. Please try again.";
+    if (lastError.message.includes('overloaded') || lastError.message.includes('503')) {
+      errorMessage = "The AI service is currently overloaded. Please try again in a moment.";
+    } else if (lastError.message.includes('API key')) {
+      errorMessage = "API configuration error. Please contact support.";
+    } else if (lastError.message.includes('quota') || lastError.message.includes('limit')) {
+      errorMessage = "API usage limit reached. Please try again later.";
+    }
+    
+    res.status(500).json({ error: errorMessage });
   } catch (err) {
-    console.error("❌ Gemini Error:", err.message);
-    res.status(500).json({ error: err.message || "Something went wrong" });
+    console.error("❌ Unexpected error:", err);
+    res.status(500).json({ error: "An unexpected error occurred. Please try again." });
   }
 });
 
