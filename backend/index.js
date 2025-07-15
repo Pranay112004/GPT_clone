@@ -29,18 +29,27 @@ if (!API_KEY) {
 const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-// API endpoint
+// Test endpoint
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API is working!", timestamp: new Date().toISOString() });
+});
+
+// API endpoint with debugging
 app.post("/api/generate", async (req, res) => {
+  console.log("🔥 API endpoint hit:", req.body);
   try {
     const { prompt } = req.body;
     if (!prompt) {
+      console.log("❌ No prompt provided");
       return res.status(400).json({ error: "Prompt is required" });
     }
+    console.log("📝 Generating response for prompt:", prompt.substring(0, 100));
     const result = await model.generateContent(prompt);
     const text = result.response.text();
+    console.log("✅ Response generated successfully");
     res.json({ response: text });
   } catch (err) {
-    console.error("Gemini Error:", err);
+    console.error("❌ Gemini Error:", err.message);
     res.status(500).json({ error: err.message || "Something went wrong" });
   }
 });
@@ -58,4 +67,7 @@ if (process.env.NODE_ENV === "production") {
 // Start server
 app.listen(port, () => {
   console.log(`✅ Server is running at http://localhost:${port}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
+  console.log(`🔑 API Key configured: ${API_KEY ? 'Yes' : 'No'}`);
+  console.log(`📁 Frontend path: ${process.env.NODE_ENV === 'production' ? path.join(__dirname, '../frontend/dist') : 'Development mode'}`);
 });
