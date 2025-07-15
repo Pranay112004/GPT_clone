@@ -1,0 +1,27 @@
+{
+  "name": "CHAT-GPT_CLONE",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"NODE_ENV=development nodemon backend/index.js\" \"npm run dev --prefix frontend\"",
+    "dev:backend": "NODE_ENV=development nodemon backend/index.js",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "NODE_ENV=production node backend/index.js"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.5.0",
+    "cors": "2.8.5",
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
+    "mongoose": "7.5.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "nodemon": "^3.1.10"
+  }
+}

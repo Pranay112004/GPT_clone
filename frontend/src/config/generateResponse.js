@@ -1,6 +1,6 @@
 export async function generateResponse(prompt) {
   try {
-    const res = await fetch("http://localhost:3000/", {
+    const res = await fetch("/api/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -9,12 +9,15 @@ export async function generateResponse(prompt) {
     });
 
     const data = await res.json();
-    if (data.response) {
+
+    if (res.ok && data.response) {
       return data.response;
     } else {
+      console.error("API Error:", data);
       throw new Error(data.error || "Unknown error");
     }
   } catch (err) {
-    throw new Error(err.message);
+    console.error("Network or fetch error:", err);
+    throw new Error(err.message || "Network error");
   }
 }

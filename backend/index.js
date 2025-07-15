@@ -8,17 +8,19 @@ import { fileURLToPath } from "url";
 // Load environment variables
 dotenv.config();
 
+// Setup Express app
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
-// Get current directory
+// Fix __dirname in ES module
 const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Initialize Google Generative AI
+// Initialize Gemini AI
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) {
   console.error("❌ GEMINI_API_KEY is missing in .env");
@@ -27,8 +29,8 @@ if (!API_KEY) {
 const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-// API route for Gemini
-app.post("/", async (req, res) => {
+// API endpoint
+app.post("/api/generate", async (req, res) => {
   try {
     const { prompt } = req.body;
     if (!prompt) {
@@ -43,19 +45,17 @@ app.post("/", async (req, res) => {
   }
 });
 
-// Serve frontend in production
+// Serve frontend (React/Vite) in production
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  const frontendPath = path.join(__dirname, "../frontend/dist");
+  app.use(express.static(frontendPath));
+
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+    res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
 
 // Start server
-app.listen(port, (err) => {
-  if (err) {
-    console.error(`❌ Failed to start server on port ${port}:`, err);
-    process.exit(1);
-  }
-  console.log(`✅ Backend running at http://localhost:${port}`);
+app.listen(port, () => {
+  console.log(`✅ Server is running at http://localhost:${port}`);
 });

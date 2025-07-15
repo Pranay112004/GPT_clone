@@ -10,10 +10,15 @@ html {
 }
 
 body {
-  background: #0d0d0d;
+  background: linear-gradient(
+    135deg,
+    #1a0b0b,
+    #2c1515
+  ); /* Deep, warm gradient */
   color: #f5f5f5;
-  font-family: "Poppins", sans-serif;
-  font-size: clamp(1.4rem, 2.5vw, 1.6rem); /* Responsive base font */
+  font-family: "Inter", sans-serif; /* Cleaner, modern font */
+  font-size: clamp(1.4rem, 2.5vw, 1.6rem);
+  line-height: 1.6;
 }
 
 /* Layout */
@@ -21,41 +26,54 @@ body {
   display: flex;
   height: 100vh;
   overflow: hidden;
-  position: relative; /* For sidebar toggle */
+  position: relative;
+  background: radial-gradient(
+    circle at top,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
 }
 
 /* Sidebar */
 .sidebar {
-  width: clamp(220px, 25vw, 280px); /* Responsive width */
-  background: #1c1c1c;
-  border-right: 1px solid #2e2e2e;
+  width: clamp(220px, 25vw, 280px);
+  background: #1a1a1a; /* Darker, sleeker sidebar */
+  border-right: 1px solid #333;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: clamp(1.5rem, 2vw, 2rem) clamp(1rem, 2vw, 1.5rem);
-  transition: transform 0.3s ease;
-  z-index: 10; /* Above main content */
+  padding: clamp(2rem, 2.5vw, 2.5rem) clamp(1.5rem, 2vw, 2rem);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Logo & Brand */
 .upperSideTop {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: clamp(1.5rem, 2vw, 2rem);
+  gap: 1.2rem;
+  margin-bottom: clamp(2rem, 2.5vw, 2.5rem);
 }
 
 .logo {
-  width: clamp(30px, 4vw, 40px);
-  height: clamp(30px, 4vw, 40px);
+  width: clamp(32px, 4.5vw, 42px);
+  height: clamp(32px, 4.5vw, 42px);
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 .brand {
-  font-size: clamp(1.6rem, 2.5vw, 2rem);
-  font-weight: 600;
-  background: linear-gradient(45deg, #40c9ff, #e81cff);
+  font-size: clamp(1.8rem, 2.8vw, 2.2rem);
+  font-weight: 700;
+  background: linear-gradient(45deg, #f9f4f4, #cfdcdb); /* Vibrant gradient */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
 }
 
 /* New Chat Button */
@@ -63,67 +81,74 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  background: linear-gradient(135deg, #71d0c0, #afbdcd);
+  gap: 1.2rem;
+  background: linear-gradient(135deg, #eae5e5, #e7efef);
   border: none;
-  color: white;
-  padding: clamp(1rem, 1.5vw, 1.2rem);
-  border-radius: 10px;
-  margin-bottom: clamp(1.5rem, 2vw, 2rem);
+  color: #110f0f;
+  padding: clamp(1.2rem, 1.8vw, 1.4rem);
+  border-radius: 12px;
+  margin-bottom: clamp(2rem, 2.5vw, 2.5rem);
   cursor: pointer;
   font-weight: 600;
-  font-size: clamp(1.4rem, 2vw, 1.6rem);
-  box-shadow: 0 4px 20px rgba(0, 255, 224, 0.2);
+  font-size: clamp(1.5rem, 2.2vw, 1.7rem);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
   transition: all 0.3s ease;
 }
 
 .midBtn:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+  background: linear-gradient(135deg, #ff8787, #6be0d8);
 }
 
 .addBtn {
-  width: clamp(16px, 2.5vw, 20px);
-  height: clamp(16px, 2.5vw, 20px);
+  width: clamp(18px, 2.8vw, 22px);
+  height: clamp(18px, 2.8vw, 22px);
+  filter: brightness(0) invert(1);
 }
 
 /* Suggested Queries */
 .upperSideBottom {
   display: flex;
   flex-direction: column;
-  gap: clamp(1rem, 1.5vw, 1.2rem);
+  gap: clamp(1.2rem, 1.8vw, 1.4rem);
 }
 
 .query {
-  background-color: #2e2e2e;
-  color: #ccc;
-  border: 1px solid #3b3b3b;
-  padding: clamp(1rem, 1.5vw, 1.2rem);
-  border-radius: 8px;
+  background: #2a2a2a;
+  color: #d5d5d5;
+  border: 1px solid #3a3a3a;
+  padding: clamp(1.2rem, 1.8vw, 1.4rem);
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  font-size: clamp(1.3rem, 2vw, 1.5rem);
-  transition: background 0.2s ease, transform 0.2s ease;
+  gap: 1.2rem;
+  font-size: clamp(1.4rem, 2.2vw, 1.6rem);
+  transition: all 0.3s ease;
 }
 
 .query img {
-  width: clamp(14px, 2vw, 18px);
-  height: clamp(14px, 2vw, 18px);
+  width: clamp(16px, 2.2vw, 20px);
+  height: clamp(16px, 2.2vw, 20px);
   filter: brightness(0) invert(1);
 }
 
 .query:hover {
-  background-color: #3b3b3b;
-  transform: scale(1.02);
+  background: #3a3a3a;
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Main Chat Area */
 .main {
   flex: 1;
-  padding: clamp(1.5rem, 2.5vw, 2.5rem);
-  background: radial-gradient(circle at top left, #1a1a1a, #0f0f0f);
+  padding: clamp(2rem, 3vw, 3rem);
+  background: radial-gradient(
+    circle at top left,
+    #2c2525,
+    #1a0b0b
+  ); /* Subtle gradient */
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -133,73 +158,91 @@ body {
 /* Welcome Message */
 .welcome {
   text-align: center;
-  margin-top: 15vh; /* Adjusted for smaller screens */
+  margin-top: 15vh;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .welcome h2 {
-  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-  margin-bottom: clamp(0.8rem, 1.5vw, 1rem);
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  margin-bottom: clamp(1rem, 1.8vw, 1.2rem);
   color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 
 .welcome p {
-  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-  color: #bbbbbb;
+  font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  color: #cccccc;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* Chats */
 .chats {
   flex: 1;
   overflow-y: auto;
-  padding-right: clamp(0.5rem, 1vw, 1rem);
-  margin-bottom: clamp(1.5rem, 2vw, 2rem);
+  padding-right: clamp(0.8rem, 1.2vw, 1.2rem);
+  margin-bottom: clamp(2rem, 2.5vw, 2.5rem);
 }
 
 .chat {
   display: flex;
   align-items: flex-start;
-  gap: clamp(1rem, 1.5vw, 1.5rem);
-  margin-bottom: clamp(1.5rem, 2vw, 2rem);
+  gap: clamp(1.2rem, 1.8vw, 1.8rem);
+  margin-bottom: clamp(2rem, 2.5vw, 2.5rem);
+  animation: slideIn 0.5s ease-out;
 }
 
 .chat img {
-  width: clamp(24px, 4vw, 36px);
-  height: clamp(24px, 4vw, 36px);
+  width: clamp(28px, 4.5vw, 40px);
+  height: clamp(28px, 4.5vw, 40px);
   border-radius: 50%;
+  border: 2px solid #444;
 }
 
 .chat.bot img {
-  background-color: #444;
+  background: #555;
+  border-color: #666;
 }
 
 .txt {
-  background: #2c2c2c;
-  padding: clamp(0.8rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.5rem);
-  border-radius: 10px;
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
-  color: #f1f1f1;
-  max-width: 85%; /* Slightly wider on mobile */
-  line-height: 1.5;
+  background: linear-gradient(
+    135deg,
+    #4ecdc4,
+    #66ae68
+  ); /* Vibrant user message */
+  padding: clamp(1rem, 1.8vw, 1.2rem) clamp(1.2rem, 2.2vw, 1.8rem);
+  border-radius: 12px;
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  color: #ffffff;
+  max-width: 80%;
+  line-height: 1.6;
   word-wrap: break-word;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .bot .txt {
-  background: #383838;
+  background: linear-gradient(135deg, #ffffff, #e0e0e0); /* Clean bot message */
+  color: #1a1a1a;
 }
 
 /* Input Footer */
 .chatFooter {
-  padding-top: clamp(0.8rem, 1.5vw, 1rem);
-  border-top: 1px solid #2e2e2e;
+  padding-top: clamp(1rem, 1.8vw, 1.2rem);
+  border-top: 1px solid #333;
+  background: rgba(30, 30, 30, 0.8); /* Glassmorphism effect */
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
 }
 
 .inp {
   display: flex;
   align-items: center;
-  gap: clamp(0.8rem, 1.5vw, 1rem);
-  background: #1e1e1e;
-  border-radius: 10px;
-  padding: clamp(0.8rem, 1.5vw, 1rem);
+  gap: clamp(1rem, 1.8vw, 1.2rem);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: clamp(1rem, 1.8vw, 1.2rem);
 }
 
 .inp input {
@@ -207,138 +250,159 @@ body {
   background: transparent;
   border: none;
   color: #f5f5f5;
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
   outline: none;
+}
+
+.inp input::placeholder {
+  color: #aaaaaa;
 }
 
 .send {
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 0.5rem; /* Larger touch target */
+  padding: 0.6rem;
 }
 
 .send img {
-  width: clamp(18px, 3vw, 24px);
-  height: clamp(18px, 3vw, 24px);
+  width: clamp(20px, 3.2vw, 26px);
+  height: clamp(20px, 3.2vw, 26px);
   filter: brightness(0) invert(1);
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease;
 }
 
 .send:hover img {
-  transform: scale(1.1);
+  transform: rotate(20deg) scale(1.15);
 }
 
 /* Sidebar Toggle Button (Mobile) */
 .toggle-sidebar {
-  display: none; /* Hidden on desktop */
+  display: none;
   position: fixed;
-  top: 1rem;
-  left: 1rem;
-  background: #2e2e2e;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: #333;
   border: none;
   border-radius: 50%;
-  padding: 0.8rem;
+  padding: 1rem;
   cursor: pointer;
   z-index: 20;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .toggle-sidebar img {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   filter: brightness(0) invert(1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  /* Stack layout vertically */
   .app {
     flex-direction: column;
   }
 
-  /* Sidebar slides off-screen */
   .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    width: clamp(200px, 70vw, 250px);
-    transform: translateX(-100%); /* Hidden by default */
+    width: clamp(220px, 75vw, 280px);
+    transform: translateX(-100%);
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.4);
   }
 
   .sidebar.active {
-    transform: translateX(0); /* Visible when toggled */
+    transform: translateX(0);
   }
 
-  /* Show toggle button */
   .toggle-sidebar {
     display: block;
   }
 
-  /* Main content full width */
   .main {
-    padding: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(1.5rem, 2.5vw, 2rem);
     width: 100%;
   }
 
-  /* Welcome message */
   .welcome {
-    margin-top: 10vh;
+    margin-top: 12vh;
   }
 
-  /* Chat area */
   .txt {
-    max-width: 90%;
+    max-width: 85%;
   }
 
-  /* Input footer */
   .inp {
-    padding: clamp(0.6rem, 1.5vw, 0.8rem);
+    padding: clamp(0.8rem, 1.8vw, 1rem);
   }
 }
 
 @media (max-width: 480px) {
-  /* Further adjustments for small mobiles */
   html {
-    font-size: 55%; /* Slightly smaller base font */
+    font-size: 58%;
   }
 
   .sidebar {
-    width: 80vw; /* Wider sidebar for touch */
+    width: 85vw;
   }
 
   .main {
-    padding: 1rem;
+    padding: 1.2rem;
   }
 
   .welcome h2 {
-    font-size: clamp(1.6rem, 4vw, 2rem);
+    font-size: clamp(1.8rem, 4.5vw, 2.2rem);
   }
 
   .welcome p {
-    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    font-size: clamp(1.2rem, 3.5vw, 1.5rem);
   }
 
   .chat img {
-    width: clamp(20px, 5vw, 28px);
-    height: clamp(20px, 5vw, 28px);
+    width: clamp(24px, 5.5vw, 32px);
+    height: clamp(24px, 5.5vw, 32px);
   }
 
   .txt {
-    padding: 0.8rem 1rem;
-    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    padding: 0.9rem 1.2rem;
+    font-size: clamp(1.2rem, 3.5vw, 1.4rem);
   }
 
   .inp input {
-    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    font-size: clamp(1.2rem, 3.5vw, 1.4rem);
   }
 
   .send {
-    padding: 0.6rem;
+    padding: 0.7rem;
   }
 
   .send img {
-    width: clamp(16px, 4vw, 20px);
-    height: clamp(16px, 4vw, 20px);
+    width: clamp(18px, 4.5vw, 22px);
+    height: clamp(18px, 4.5vw, 22px);
   }
 }
