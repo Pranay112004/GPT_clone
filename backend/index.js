@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import OpenAI from "openai";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -20,14 +20,15 @@ const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json());
 
-// Initialize Gemini AI
-const API_KEY = process.env.GEMINI_API_KEY;
+// Initialize OpenAI
+const API_KEY = process.env.OPENAI_API_KEY;
 if (!API_KEY) {
-  console.error("❌ GEMINI_API_KEY is missing in .env");
+  console.error("❌ OPENAI_API_KEY is missing in .env");
   process.exit(1);
 }
-const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const openai = new OpenAI({
+  apiKey: API_KEY,
+});
 
 // Test endpoint
 app.get("/api/test", (req, res) => {
@@ -45,26 +46,51 @@ app.post("/api/generate", async (req, res) => {
     }
     console.log("📝 Generating response for prompt:", prompt.substring(0, 100));
     
-    // Retry logic for Gemini API
+    // Retry logic for OpenAI API
     let lastError;
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
         console.log(`🔄 Attempt ${attempt}/3`);
-        const result = await model.generateContent(prompt);
-        const text = result.response.text();
+        const completion = await openai.chat.completions.create({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are a helpful assistant. Provide clear, concise, and helpful responses."
+            },
+            {
+              role: "user",
+              content: prompt
+            }
+          ],
+          max_tokens: 1000,
+          temperature: 0.7,
+        });
+        
+        const text = completion.choices[0]?.message?.content;
+        if (!text) {
+          throw new Error("No response content received");
+        }
+        
         console.log("✅ Response generated successfully");
         return res.json({ response: text });
       } catch (err) {
         lastError = err;
         console.log(`❌ Attempt ${attempt} failed:`, err.message);
         
-        if (err.message.includes('overloaded') || err.message.includes('503')) {
-          console.log(`⏳ Waiting 2 seconds before retry...`);
+        if (err.status === 429 || err.message.includes('rate limit')) {
+          console.log(`⏳ Rate limited, waiting 3 seconds before retry...`);
+          await new Promise(resolve => setTimeout(resolve, 3000));
+          continue;
+        }
+        
+        if (err.status >= 500 || err.message.includes('server error')) {
+          console.log(`⏳ Server error, waiting 2 seconds before retry...`);
           await new Promise(resolve => setTimeout(resolve, 2000));
           continue;
         }
         
-        // For non-retryable errors, break immediately
+        // For non-retryable errors (like invalid API key), break immediately
         break;
       }
     }
@@ -74,12 +100,16 @@ app.post("/api/generate", async (req, res) => {
     
     // Provide user-friendly error messages
     let errorMessage = "Sorry, I couldn't generate a response. Please try again.";
-    if (lastError.message.includes('overloaded') || lastError.message.includes('503')) {
-      errorMessage = "The AI service is currently overloaded. Please try again in a moment.";
-    } else if (lastError.message.includes('API key')) {
-      errorMessage = "API configuration error. Please contact support.";
-    } else if (lastError.message.includes('quota') || lastError.message.includes('limit')) {
-      errorMessage = "API usage limit reached. Please try again later.";
+    if (lastError.status === 429 || lastError.message.includes('rate limit')) {
+      errorMessage = "Rate limit exceeded. Please try again in a moment.";
+    } else if (lastError.status === 401 || lastError.message.includes('API key')) {
+      errorMessage = "API key is invalid or missing. Please check your configuration.";
+    } else if (lastError.status === 403) {
+      errorMessage = "Access denied. Please check your API key permissions.";
+    } else if (lastError.message.includes('quota') || lastError.message.includes('billing')) {
+      errorMessage = "API usage limit or billing issue. Please check your OpenAI account.";
+    } else if (lastError.status >= 500) {
+      errorMessage = "OpenAI service is temporarily unavailable. Please try again later.";
     }
     
     res.status(500).json({ error: errorMessage });
@@ -103,6 +133,7 @@ if (process.env.NODE_ENV === "production") {
 app.listen(port, () => {
   console.log(`✅ Server is running at http://localhost:${port}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
-  console.log(`🔑 API Key configured: ${API_KEY ? 'Yes' : 'No'}`);
+  console.log(`🤖 AI Provider: OpenAI (GPT-3.5-turbo)`);
+  console.log(`🔑 OpenAI API Key configured: ${API_KEY ? 'Yes' : 'No'}`);
   console.log(`📁 Frontend path: ${process.env.NODE_ENV === 'production' ? path.join(__dirname, '../frontend/dist') : 'Development mode'}`);
 });
