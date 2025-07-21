@@ -37,6 +37,7 @@ function App() {
   const [prompt, setPrompt] = useState("");
   const [chats, setChats] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleSend = async () => {
     if (!prompt.trim() || isLoading) return;
@@ -83,6 +84,11 @@ function App() {
 
   const handleQueryClick = (query) => {
     setPrompt(query);
+    setIsSidebarOpen(false); // Close sidebar on mobile after selecting query
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   // Auto-scroll to bottom when chats update
@@ -95,8 +101,15 @@ function App() {
 
   return (
     <div className="app">
+      {/* Mobile Hamburger Menu */}
+      <button className="toggle-sidebar" onClick={toggleSidebar} aria-label="Toggle Sidebar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+        </svg>
+      </button>
+
       {/* Sidebar */}
-      <div className="sidebar">
+      <div className={`sidebar ${isSidebarOpen ? 'active' : ''}`}>
         <div className="upperSide">
           <div className="upperSideTop">
             <img src={gptLogo} alt="GPT Logo" className="logo" />

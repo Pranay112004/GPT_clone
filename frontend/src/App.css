@@ -46,6 +46,32 @@ body {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 10;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  height: 100vh;
+}
+
+/* Main content adjustment for desktop */
+.main {
+  margin-left: clamp(220px, 25vw, 280px);
+}
+
+.toggle-sidebar {
+  display: none;
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: #333;
+  border: none;
+  border-radius: 50%;
+  padding: 1rem;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-sidebar img {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
 }
 
 /* Logo & Brand */
@@ -143,6 +169,7 @@ body {
 /* Main Chat Area */
 .main {
   flex: 1;
+  margin-left: clamp(220px, 25vw, 280px);
   padding: clamp(2rem, 3vw, 3rem);
   background: radial-gradient(
     circle at top left,
@@ -345,6 +372,7 @@ body {
   }
 
   .main {
+    margin-left: 0;
     padding: clamp(1.5rem, 2.5vw, 2rem);
     width: 100%;
   }
