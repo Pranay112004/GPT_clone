@@ -113,7 +113,7 @@ function App() {
         <div className="upperSide">
           <div className="upperSideTop">
             <img src={gptLogo} alt="GPT Logo" className="logo" />
-            <span className="brand">Chat GPT Clone</span>
+            <span className="brand">Chat BOT</span>
           </div>
 
           <button className="midBtn" onClick={handleNewChat}>
