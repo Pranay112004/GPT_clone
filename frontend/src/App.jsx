@@ -146,7 +146,7 @@ function App() {
         <div className="chats">
           {chats.length === 0 && !isLoading && (
             <div className="welcome">
-              <h2>Welcome to Chat GPT Clone </h2>
+              <h2>Welcome User </h2>
               <p>Start a conversation by typing a message below ..</p>
             </div>
           )}
