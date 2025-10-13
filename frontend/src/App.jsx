@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-// import gptLogo from "./assets/chatgpt.svg";
+import gptLogo from "./assets/chatgpt.svg";
 import addBtn from "./assets/add-30.png";
 import msgIcon from "./assets/message.svg";
 import sendBtn from "./assets/send.svg";
@@ -170,7 +170,7 @@ function App() {
 
           {isLoading && (
             <div className="chat bot">
-              {/* <img src={gptImgLogo} alt="GPT" /> */}
+           <img src={gptImgLogo} alt="GPT" /> 
               <p className="txt">Thinking...</p>
             </div>
           )}
