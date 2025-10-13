@@ -36,7 +36,7 @@ if (AI_PROVIDER === 'gemini') {
     process.exit(1);
   }
   genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-  model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
   console.log("🤖 Using Gemini AI");
 } else {
   if (!OPENAI_API_KEY) {
